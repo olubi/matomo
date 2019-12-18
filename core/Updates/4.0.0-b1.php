@@ -9,6 +9,7 @@
 
 namespace Piwik\Updates;
 
+use Piwik\Common;
 use Piwik\Updater;
 use Piwik\Updates as PiwikUpdates;
 use Piwik\Updater\Migration\Factory as MigrationFactory;
@@ -35,10 +36,22 @@ class Updates_4_0_0_b1 extends PiwikUpdates
 
         $migration3 = $this->migration->plugin->activate('BulkTracking');
 
+        // Move the site search fields of log_visit out of custom variables into their own fields
+        $createSearchCatColumn = $this->migration->db->addColumn('log_link_visit_action', 'search_cat', 'VARCHAR(200)');
+        $createSearchCountColumn = $this->migration->db->addColumn('log_link_visit_action', 'search_count', 'VARCHAR(200)');
+        $visitActionTable = Common::prefixTable('log_link_visit_action');
+        $populateSearchCatColumn = $this->migration->db->boundSql("UPDATE $visitActionTable SET search_cat = custom_var_v4 WHERE custom_var_k4 = '_pk_scat'");
+        $populateSearchCountColumn = $this->migration->db->boundSql("UPDATE $visitActionTable SET search_count = custom_var_v5 WHERE custom_var_k4 = '_pk_scount'");
+
         return array(
             $migration1,
             $migration2,
-            $migration3
+            $migration3,
+            $migration2,
+            $createSearchCatColumn,
+            $createSearchCountColumn,
+            $populateSearchCatColumn,
+            $populateSearchCountColumn
         );
     }
 
