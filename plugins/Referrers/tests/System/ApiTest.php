@@ -226,12 +226,14 @@ class ApiTest extends SystemTestCase
         $t->setUrl('http://piwik.net/');
         $t->doTrackPageView('My Title');
 
+        $GLOBALS['abc'] = 1;
         /** @var DataTable $visits */
         $visits = Request::processRequest(
             'Referrers.getWebsites', 
             array('idSite' => $idSite, 'period' => 'day', 'date' => $dateTime, 'flat' => 1),
             $default = []
         );
+        unset($GLOBALS['abc']);
 
         $firstRow = $visits->getFirstRow();
         $this->assertEquals('t.umblr.com/index', $firstRow->getColumn('label'));
