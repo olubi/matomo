@@ -229,7 +229,8 @@ class ApiTest extends SystemTestCase
         /** @var DataTable $visits */
         $visits = Request::processRequest(
             'Referrers.getWebsites', 
-            array('idSite' => $idSite, 'period' => 'day', 'date' => $dateTime, 'flat' => 1)
+            array('idSite' => $idSite, 'period' => 'day', 'date' => $dateTime, 'flat' => 1),
+            $default = []
         );
 
         $firstRow = $visits->getFirstRow();
