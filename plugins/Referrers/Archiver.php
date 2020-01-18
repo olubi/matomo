@@ -83,6 +83,8 @@ class Archiver extends \Piwik\Plugin\Archiver
 
     protected function aggregateVisitRow($row)
     {
+        if (@$GLOBALS['abc'])
+        print_r($row);
         switch ($row['referer_type']) {
             case Common::REFERRER_TYPE_SEARCH_ENGINE:
                 if (empty($row['referer_keyword'])) {
