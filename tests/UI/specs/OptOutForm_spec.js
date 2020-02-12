@@ -17,6 +17,7 @@ describe("OptOutForm", function () {
             const $iframe = $('iframe#optOutIframe');
             $iframe.width(350);
             $iframe.height($iframe.contents().outerHeight());
+            $('#textError_https').hide();
         });
     }
 
