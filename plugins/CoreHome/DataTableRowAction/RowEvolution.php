@@ -284,8 +284,8 @@ class RowEvolution
             $fractionDigits = max($this->getFractionDigits($first), $this->getFractionDigits($last));
 
             $details = Piwik::translate('RowEvolution_MetricBetweenText', array(
-                NumberFormatter::getInstance()->format($first, $fractionDigits, $fractionDigits) . $unit,
-                NumberFormatter::getInstance()->format($last, $fractionDigits, $fractionDigits) . $unit,
+                NumberFormatter::getInstance()->format($first, 0, $fractionDigits) . $unit,
+                NumberFormatter::getInstance()->format($last, 0, $fractionDigits) . $unit,
             ));
 
             if ($change !== false) {
